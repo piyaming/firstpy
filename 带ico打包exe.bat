@@ -1,0 +1,1 @@
+pyinstaller -F -w --i "512.ico"  liuyaopaipan.py
