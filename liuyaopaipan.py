@@ -1,19 +1,20 @@
-#liuyaopaipan tool
-import pp
+# liuyaopaipan tool
 import sys
-import bagua
-import sizhu
-import shensha
 import time
+
+from PyQt5.QtWidgets import QApplication, QWidget, QDialog
+
+import GUI
+import bagua
 import dialog
-from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QDialog
-from PyQt5.QtGui import QPixmap
+import shensha
+import sizhu
 
 
-class paipan(QWidget, pp.Ui_Form):
+class paipan(QWidget, GUI.Ui_Form):
     def __init__(self):
         QWidget.__init__(self)
-        pp.Ui_Form.__init__(self)
+        GUI.Ui_Form.__init__(self)
         self.setupUi(self)
         self.yaof = ["0", "0", "0", "0", "0", "0"]
         self.dy = ["0", "0", "0", "0", "0", "0"]
@@ -37,7 +38,7 @@ class paipan(QWidget, pp.Ui_Form):
         self.comboBox_7.activated.connect(self.cb7)
         self.comboBox_8.activated.connect(self.cb8)
 
-        self.comboBox.setCurrentIndex(time.localtime()[0] - 2001)
+        self.comboBox.setCurrentIndex(time.localtime()[0] - 1980)
         self.comboBox_2.setCurrentIndex(time.localtime()[1] - 1)
         self.comboBox_3.setCurrentIndex(time.localtime()[2] - 1)
         self.comboBox_4.setCurrentIndex(time.localtime()[3])
@@ -58,15 +59,27 @@ class paipan(QWidget, pp.Ui_Form):
         self.plainTextEdit.copy()
 
     def cb7(self):
-        if self.comboBox_7.currentText() in ["甲", "丙", "戊", "庚", "壬"] and self.comboBox_8.currentText() not in ["子", "寅", "辰", "午",  "申", "戌"]:
+        if self.comboBox_7.currentText() in ["甲", "丙", "戊", "庚", "壬"] and self.comboBox_8.currentText() not in ["子",
+                                                                                                                "寅",
+                                                                                                                "辰",
+                                                                                                                "午",
+                                                                                                                "申",
+                                                                                                                "戌"]:
             self.comboBox_8.setCurrentText("子")
-        elif self.comboBox_7.currentText() in ["乙", "丁", "己", "辛", "癸"] and self.comboBox_8.currentText() not in ["丑", "卯", "巳", "未", "酉", "亥"]:
+        elif self.comboBox_7.currentText() in ["乙", "丁", "己", "辛", "癸"] and self.comboBox_8.currentText() not in ["丑",
+                                                                                                                  "卯",
+                                                                                                                  "巳",
+                                                                                                                  "未",
+                                                                                                                  "酉",
+                                                                                                                  "亥"]:
             self.comboBox_8.setCurrentText("丑")
 
     def cb8(self):
-        if self.comboBox_8.currentText() in ["子", "寅", "辰", "午", "申", "戌"] and self.comboBox_7.currentText() not in ["甲", "丙", "戊", "庚", "壬"]:
+        if self.comboBox_8.currentText() in ["子", "寅", "辰", "午", "申", "戌"] and self.comboBox_7.currentText() not in [
+            "甲", "丙", "戊", "庚", "壬"]:
             self.comboBox_7.setCurrentText("甲")
-        elif self.comboBox_8.currentText() in ["丑", "卯", "巳", "未", "酉", "亥"] and self.comboBox_7.currentText() not in ["乙", "丁", "己", "辛", "癸"]:
+        elif self.comboBox_8.currentText() in ["丑", "卯", "巳", "未", "酉", "亥"] and self.comboBox_7.currentText() not in [
+            "乙", "丁", "己", "辛", "癸"]:
             self.comboBox_7.setCurrentText("乙")
 
     def qinkong(self):
@@ -86,7 +99,7 @@ class paipan(QWidget, pp.Ui_Form):
         self.pushButton_6.setText("■■■■■■")
         self.yaof = ["0", "0", "0", "0", "0", "0"]
         self.dy = ["0", "0", "0", "0", "0", "0"]
-        self.comboBox.setCurrentIndex(time.localtime()[0] - 2001)
+        self.comboBox.setCurrentIndex(time.localtime()[0] - 1980)
         self.comboBox_2.setCurrentIndex(time.localtime()[1] - 1)
         self.comboBox_3.setCurrentIndex(time.localtime()[2] - 1)
         self.comboBox_4.setCurrentIndex(time.localtime()[3])
@@ -183,7 +196,7 @@ class paipan(QWidget, pp.Ui_Form):
                                self.comboBox_5.currentText())
         self.plainTextEdit.clear()
         if self.SZ2.yue()[1] == self.comboBox_6.currentText() and self.SZ2.ri()[0] == self.comboBox_7.currentText() and \
-                        self.SZ2.ri()[1] == self.comboBox_8.currentText():
+                self.SZ2.ri()[1] == self.comboBox_8.currentText():
             self.paiguashijian = self.comboBox.currentText() + "年" + self.comboBox_2.currentText() + "月" + self.comboBox_3.currentText() + \
                                  "日" + self.comboBox_4.currentText() + "点" + self.comboBox_5.currentText() + "分" + "　" + self.SZ2.xinqi() + "\n" + "干支：" + \
                                  self.SZ2.nian()[0] + self.SZ2.nian()[1] + "年　" + \
@@ -201,28 +214,28 @@ class paipan(QWidget, pp.Ui_Form):
 
         if int(self.dd, 2) == 0:
             self.plainTextEdit.appendPlainText(
-                  7 * "　" + self.comboBox_6.currentText() + "月" + 7 * "　" + self.comboBox_7.currentText() + self.comboBox_8.currentText() + "日" + SS.xunkong())
+                7 * "　" + self.comboBox_6.currentText() + "月" + 7 * "　" + self.comboBox_7.currentText() + self.comboBox_8.currentText() + "日" + SS.xunkong())
             self.plainTextEdit.appendPlainText(
-                  "六神" + 2 * "　" + "藏爻" + "　" + GG.guaming(GG.guashu(self.liuy)) + "　" + GG.guagong(
+                "六神" + 2 * "　" + "藏爻" + "　" + GG.guaming(GG.guashu(self.liuy)) + "　" + GG.guagong(
                     GG.guashu(self.liuy)) + "宫")
             for i in range(6, 0, -1):
                 self.plainTextEdit.appendPlainText(
-                      SS.liushen()[i] + "　" + GG.canggua()[i] + GG.guafu()[i] + GG.zhugua()[i] +
+                    SS.liushen()[i] + "　" + GG.canggua()[i] + GG.guafu()[i] + GG.zhugua()[i] +
                     GG.guashiying(GG.guashu(self.liuy))[i] + GG.dywz()[i] + GG.biangua()[i] + GG.guafu()[i + 6])
             self.plainTextEdit.appendPlainText(7 * "　" + GG.gualei(GG.guashu(self.liuy)))
         elif int(self.dd, 2) != 0:
             self.plainTextEdit.appendPlainText(
-                 7 * "　" + self.comboBox_6.currentText() + "月" + 14 * "　" + self.comboBox_7.currentText() + self.comboBox_8.currentText() + "日" + SS.xunkong())
+                7 * "　" + self.comboBox_6.currentText() + "月" + 14 * "　" + self.comboBox_7.currentText() + self.comboBox_8.currentText() + "日" + SS.xunkong())
             self.plainTextEdit.appendPlainText(
-                  "六神" + 2 * "　" + "藏爻" + "　" + GG.guaming(GG.guashu(self.liuy)) + "　" + GG.guagong(
+                "六神" + 2 * "　" + "藏爻" + "　" + GG.guaming(GG.guashu(self.liuy)) + "　" + GG.guagong(
                     GG.guashu(self.liuy)) + "宫" + 10 * "　" + GG.guaming(GG.guashu(GG.bian6())) + "　" + GG.guagong(
                     GG.guashu(GG.bian6())) + "宫")
             for i in range(6, 0, -1):
                 self.plainTextEdit.appendPlainText(
-                      SS.liushen()[i] + "　" + GG.canggua()[i] + GG.guafu()[i] + GG.zhugua()[i] +
+                    SS.liushen()[i] + "　" + GG.canggua()[i] + GG.guafu()[i] + GG.zhugua()[i] +
                     GG.guashiying(GG.guashu(self.liuy))[i] + GG.dywz()[i] + GG.biangua()[i] + GG.guafu()[i + 6])
             self.plainTextEdit.appendPlainText(
-                 7 * "　" + GG.gualei(GG.guashu(self.liuy)) + 13 * "　" + GG.gualei(GG.guashu(GG.bian6())))
+                7 * "　" + GG.gualei(GG.guashu(self.liuy)) + 13 * "　" + GG.gualei(GG.guashu(GG.bian6())))
 
 
 class Dia(QDialog, dialog.Ui_Dialog):
